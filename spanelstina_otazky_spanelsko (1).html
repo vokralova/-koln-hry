@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#c62828">
+<title>¡Hola España! – Španělské otázky</title>
+<style>
+:root{--red:#c62828;--gold:#f6c344;--navy:#17345c;--cream:#fff8e9;--green:#2e7d55;--ink:#243047;--muted:#637087;--white:#fff}
+*{box-sizing:border-box} body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:linear-gradient(135deg,#fff8e9 0%,#ffe8c2 48%,#f9d1c8 100%)}
+.top{height:13px;background:linear-gradient(to right,var(--red) 0 33.33%,var(--gold) 33.33% 66.66%,var(--red) 66.66%)}
+.wrap{max-width:900px;margin:0 auto;padding:22px 16px 38px}
+header{text-align:center;margin:8px 0 20px} .flag{font-size:34px;letter-spacing:5px} h1{margin:4px 0;color:var(--red);font-size:clamp(28px,5vw,42px);line-height:1.1} .sub{color:#77533a;margin:8px 0 0;font-weight:600}
+.panel{background:rgba(255,255,255,.94);border:2px solid #f0d8a6;border-radius:22px;padding:clamp(18px,4vw,30px);box-shadow:0 12px 30px rgba(92,53,22,.12)}
+.screen{display:none}.screen.active{display:block}.intro{text-align:center}.intro p{line-height:1.55;color:var(--muted);max-width:650px;margin:12px auto 22px}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:20px 0}
+button{font:inherit;cursor:pointer;border:0}.mode,.mainbtn{border-radius:14px;padding:15px 18px;font-weight:800;background:var(--red);color:white;box-shadow:0 4px 0 #8e1c1c;transition:transform .1s,filter .1s}.mode:nth-child(2){background:var(--navy);box-shadow:0 4px 0 #0c203b}.mode:nth-child(3){background:var(--green);box-shadow:0 4px 0 #1c5839}.mode:hover,.mainbtn:hover{filter:brightness(1.07);transform:translateY(-1px)}.smallnote{font-size:13px;color:var(--muted)}
+.hud{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;font-weight:750}.pill{border-radius:999px;background:#fff0ce;padding:8px 13px;color:#704a13}.progress{height:10px;background:#f0e5d2;border-radius:20px;overflow:hidden;margin:10px 0 22px}.bar{height:100%;width:100%;background:linear-gradient(90deg,var(--green),#8bc34a);transition:width .2s linear,background .2s}
+.timerline{display:flex;justify-content:space-between;font-size:14px;font-weight:750;color:var(--muted);margin-bottom:7px}.questionbox{text-align:center;padding:10px 0 18px}.tag{display:inline-block;color:#a35a00;background:#fff0cc;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:800;margin-bottom:12px}.question{font-size:clamp(24px,5vw,36px);font-weight:850;color:var(--navy);margin:2px 0 6px}.hint{color:var(--muted);margin:0}.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}.answer{background:#fff;border:2px solid #e5d8c3;border-radius:14px;padding:14px 12px;min-height:66px;font-size:17px;font-weight:700;color:var(--ink);text-align:center}.answer:hover:not(:disabled){border-color:var(--red);background:#fff8f5}.answer:disabled{cursor:default;opacity:1}.answer.correct{background:#e5f5e9;border-color:#39a35c;color:#185d30}.answer.wrong{background:#ffebeb;border-color:#d74b4b;color:#9b2020}
+.feedback{min-height:52px;text-align:center;font-weight:750;padding:10px;border-radius:12px;margin-top:8px}.feedback.good{background:#e8f5e9;color:#216236}.feedback.bad{background:#fff0ed;color:#9b2929}.nextrow{display:flex;justify-content:center;margin-top:10px}.mainbtn{min-width:180px}.hidden{display:none!important}
+.result{text-align:center}.score{font-size:52px;color:var(--red);font-weight:900;margin:8px}.result h2{color:var(--navy)}.review{margin:20px auto 0;text-align:left;max-width:700px}.review details{background:#fff8eb;border:1px solid #edd9b6;border-radius:11px;padding:10px 13px;margin:8px 0}.review summary{font-weight:800;cursor:pointer}.review p{margin:8px 0 2px;color:var(--muted)}
+@media(max-width:560px){.answers{grid-template-columns:1fr}.hud{justify-content:center}.panel{padding:17px}.answer{min-height:56px}}
+</style>
+</head>
+<body><div class="top"></div><main class="wrap">
+<header><div class="flag">🇪🇸 ☀️ 💃 🇪🇸</div><h1>¡Hola España!</h1><p class="sub">Zahraj si a procvičování španělských otázek</p></header>
+<section id="start" class="panel screen active intro">
+<h2>¡Vamos! Pojďme na to!</h2>
+<p>Procvič si jedenáct španělských otázek. Vyber správný český překlad, najdi vhodnou odpověď nebo si zahraj obojí dohromady. Na každou otázku máš <strong>10 sekund</strong>.</p>
+<div class="modes">
+<button class="mode" onclick="startGame('translate')">📖 Co to znamená?<br><span style="font-size:13px;font-weight:500">Vyber český překlad</span></button>
+<button class="mode" onclick="startGame('reply')">💬 Jak odpovíš?<br><span style="font-size:13px;font-weight:500">Vyber vhodnou odpověď</span></button>
+<button class="mode" onclick="startGame('mix')">🎲 ¡Sorpresa!<br><span style="font-size:13px;font-weight:500">Oba typy otázek</span></button>
+</div>
+<p class="smallnote">Hraješ s fiktivními postavami. Své skutečné telefonní číslo ani e-mail nikam nezadáváš.</p>
+</section>
+<section id="game" class="panel screen">
+<div class="hud"><span class="pill" id="counter">Otázka 1 / 10</span><span class="pill" id="score">⭐ 0 bodů</span><span class="pill" id="lives">❤️❤️❤️</span></div>
+<div class="timerline"><span>Čas na odpověď</span><span id="time">10 s</span></div><div class="progress"><div id="timerbar" class="bar"></div></div>
+<div class="questionbox"><div id="tag" class="tag">PŘELOŽ DO ČEŠTINY</div><div id="question" class="question">¿Cómo estás?</div><p id="prompt" class="hint">Co znamená tato otázka?</p></div>
+<div id="answers" class="answers"></div><div id="feedback" class="feedback" aria-live="polite"></div>
+<div class="nextrow"><button id="next" class="mainbtn hidden" onclick="nextQuestion()">Další otázka →</button></div>
+</section>
+<section id="result" class="panel screen result">
+<div class="flag">🏆 🌞 🏆</div><h2 id="resultTitle">¡Muy bien!</h2><div class="score" id="finalScore">0 / 10</div><p id="resultText">Skvělá práce!</p>
+<div class="nextrow"><button class="mainbtn" onclick="showStart()">Hrát znovu</button></div>
+<div class="review" id="review"><h3>Co si ještě zopakovat</h3></div>
+</section>
+</main>
+<script>
+const items=[
+ {q:'¿Cómo estás?',cz:'Jak se máš?',a:'Estoy bien, gracias. (Mám se dobře, děkuji.)',wrong:['Me llamo Pablo. (Jmenuji se Pablo.)','Soy de España. (Jsem ze Španělska.)','Tengo diez años. (Je mi deset let.)']},
+ {q:'¿Qué tal?',cz:'Jak se máš? / Jak to jde?',a:'Muy bien, gracias. (Velmi dobře, děkuji.)',wrong:['Se escribe L-U-C-Í-A. (Hláskuje se L-U-C-Í-A.)','Sí, soy checa. (Ano, jsem Češka.)','Tengo correo. (Mám e-mail.)']},
+ {q:'¿De dónde eres?',cz:'Odkud jsi?',a:'Soy de la República Checa. (Jsem z České republiky.)',wrong:['Tengo once años. (Je mi jedenáct let.)','Me llamo Ana. (Jmenuji se Ana.)','Estoy fenomenal. (Mám se skvěle.)']},
+ {q:'¿Eres checo?',cz:'Jsi Čech?',a:'Sí, soy checo. (Ano, jsem Čech.)',wrong:['Sí, soy checa. (Ano, jsem Češka.)','Soy de Madrid. (Jsem z Madridu.)','Mi nombre es Pablo. (Jmenuji se Pablo.)']},
+ {q:'¿Eres checa?',cz:'Jsi Češka?',a:'Sí, soy checa. (Ano, jsem Češka.)',wrong:['Sí, soy checo. (Ano, jsem Čech.)','Tengo diez años. (Je mi deset let.)','Estoy bien. (Mám se dobře.)']},
+ {q:'¿Cómo te llamas?',cz:'Jak se jmenuješ?',a:'Me llamo Lucía. (Jmenuji se Lucía.)',wrong:['Soy de Praga. (Jsem z Prahy.)','Muy bien, gracias. (Velmi dobře, děkuji.)','Tengo correo electrónico. (Mám e-mail.)']},
+ {q:'¿Cómo se escribe?',cz:'Jak se to píše / hláskuje?',a:'Se escribe P-A-B-L-O. (Hláskuje se P-A-B-L-O.)',wrong:['Tengo diez años. (Je mi deset let.)','Sí, soy checo. (Ano, jsem Čech.)','Mi número es 123 456 789. (Moje číslo je 123 456 789.)']},
+ {q:'¿Cuál es tu número de teléfono?',cz:'Jaké je tvoje telefonní číslo?',a:'Mi número es 123 456 789. (Moje číslo je 123 456 789.)',wrong:['Me llamo Marta. (Jmenuji se Marta.)','Soy de España. (Jsem ze Španělska.)','Estoy muy bien. (Mám se moc dobře.)']},
+ {q:'¿Cuál es tu nombre?',cz:'Jaké je tvoje jméno?',a:'Mi nombre es Carlos. (Moje jméno je Carlos.)',wrong:['Tengo once años. (Je mi jedenáct let.)','Sí, soy checa. (Ano, jsem Češka.)','No estoy bien. (Nemám se dobře.)']},
+ {q:'¿Tienes correo?',cz:'Máš e-mail?',a:'Sí, tengo correo electrónico. (Ano, mám e-mail.)',wrong:['Soy de Brno. (Jsem z Brna.)','Me llamo Diego. (Jmenuji se Diego.)','Tengo diez años. (Je mi deset let.)']},
+ {q:'¿Cuántos años tienes?',cz:'Kolik je ti let?',a:'Tengo diez años. (Je mi deset let.)',wrong:['Mi nombre es Elena. (Jmenuji se Elena.)','Sí, soy checo. (Ano, jsem Čech.)','Se escribe M-A-R-I-A. (Hláskuje se M-A-R-I-A.)']}
+];
+let order=[],idx=0,points=0,lives=3,seconds=10,timer=null,locked=false,mode='mix',missed=[];
+const $=id=>document.getElementById(id);
+function show(id){['start','game','result'].forEach(x=>$(x).classList.toggle('active',x===id))}
+function showStart(){clearInterval(timer);show('start')}
+function shuffle(arr){return [...arr].sort(()=>Math.random()-.5)}
+function startGame(m){mode=m;order=shuffle(items);if(order.length>10)order=order.slice(0,10);idx=0;points=0;lives=3;missed=[];show('game');render()}
+function render(){clearInterval(timer);locked=false;seconds=10;$('counter').textContent=`Otázka ${idx+1} / ${order.length}`;$('score').textContent=`⭐ ${points} bodů`;$('lives').textContent='❤️'.repeat(lives)+'♡'.repeat(3-lives);$('feedback').textContent='';$('feedback').className='feedback';$('next').classList.add('hidden');$('time').textContent='10 s';$('timerbar').style.width='100%';$('timerbar').style.background='linear-gradient(90deg,#2e7d55,#8bc34a)';
+ const item=order[idx];let task=mode==='mix'?(Math.random()<.5?'translate':'reply'):mode;
+ $('tag').textContent=task==='translate'?'PŘELOŽ DO ČEŠTINY':'VYBER VHODNOU ODPOVĚĎ';$('question').textContent=item.q;$('prompt').textContent=task==='translate'?'Co znamená tato otázka?':'Jak můžeš na tuto otázku odpovědět?';
+ let correct=task==='translate'?item.cz:item.a;let opts=task==='translate'?makeTranslationOptions(item):shuffle([item.a,...item.wrong]);opts=shuffle(opts);
+ const area=$('answers');area.innerHTML='';opts.forEach(opt=>{let b=document.createElement('button');b.className='answer';b.textContent=opt;b.onclick=()=>answer(b,opt===correct,correct,item);area.appendChild(b)});
+ timer=setInterval(()=>{seconds--; $('time').textContent=seconds+' s';$('timerbar').style.width=(seconds*10)+'%';if(seconds<=3)$('timerbar').style.background='#c62828';if(seconds<=0){clearInterval(timer);timeOut(correct,item)}},1000)
+}
+function makeTranslationOptions(item){let pool=items.map(x=>x.cz).filter(x=>x!==item.cz);return shuffle([item.cz,...shuffle(pool).slice(0,3)])}
+function answer(btn,ok,correct,item){if(locked)return;locked=true;clearInterval(timer);document.querySelectorAll('.answer').forEach(b=>{b.disabled=true;if(b.textContent===correct)b.classList.add('correct')});if(ok){points++;$('feedback').textContent='¡Correcto! Správně! +1 bod';$('feedback').className='feedback good'}else{lives--;$('feedback').textContent='¡Casi! Správná odpověď: '+correct;$('feedback').className='feedback bad';missed.push(item)}updateHud();finishOrNext()}
+function timeOut(correct,item){if(locked)return;locked=true;lives--;$('feedback').textContent='¡Se acabó el tiempo! Čas vypršel. Správně: '+correct;$('feedback').className='feedback bad';document.querySelectorAll('.answer').forEach(b=>{b.disabled=true;if(b.textContent===correct)b.classList.add('correct')});missed.push(item);updateHud();finishOrNext()}
+function updateHud(){$('score').textContent=`⭐ ${points} bodů`;$('lives').textContent='❤️'.repeat(lives)+'♡'.repeat(3-lives)}
+function finishOrNext(){$('next').classList.remove('hidden');$('next').textContent=(idx===order.length-1||lives<=0)?'Vyhodnotit hru':'Další otázka →'}
+function nextQuestion(){if(idx===order.length-1||lives<=0){endGame();return}idx++;render()}
+function endGame(){clearInterval(timer);show('result');$('finalScore').textContent=points+' / '+order.length;$('resultTitle').textContent=points>=8?'¡Excelente! Skvěle!':points>=5?'¡Muy bien! Dobrá práce!':'¡A practicar! Ještě potrénuj!';$('resultText').textContent=`Získal/a jsi ${points} bodů. Správně zodpovězených otázek: ${points} z ${order.length}.`;
+ const rev=$('review');rev.innerHTML='<h3>Co si ještě zopakovat</h3>';if(!missed.length){rev.innerHTML+='<p>Výborně! Všechny otázky jsi zvládl/a bez chyby. 🎉</p>'}else{let unique=[...new Map(missed.map(x=>[x.q,x])).values()];unique.forEach(x=>{let d=document.createElement('details');let s=document.createElement('summary');s.textContent=x.q;let p=document.createElement('p');p.textContent=x.cz+' — '+x.a;d.append(s,p);rev.appendChild(d)})}}
+</script>
+</body></html>
